@@ -13,14 +13,32 @@ let inputValue = document.getElementById("inputvalue");
 async function checkWeather(cityName) {
   const response = await fetch(apiUrl + `&q=${cityName}&appid=${apiKey}`);
   var data = await response.json();
-  console.log(data.name);
-  city.innerHTML = data.name;
-  temp.innerHTML = Math.round(data.main.temp) + "°C";
-  humidity.innerHTML = data.main.humidity + "%";
-  wind.innerHTML = data.wind.speed + " kmph";
+
+  if (data.message === "city not found") {
+    alert("Enter a valid city.");
+  } else {
+    console.log(data);
+    city.innerHTML = data.name;
+    temp.innerHTML = Math.round(data.main.temp) + "°C";
+    humidity.innerHTML = data.main.humidity + "%";
+    wind.innerHTML = data.wind.speed + " kmph";
+  }
 }
 
-search.addEventListener("click", function () {
+function gettingdetails() {
   let cityName = inputValue.value;
-  checkWeather(cityName);
+  if (cityName === "") {
+    alert("Please enter a city name");
+  } else {
+    checkWeather(cityName);
+  }
+}
+search.addEventListener("click", function () {
+  gettingdetails();
+});
+
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    gettingdetails();
+  }
 });
