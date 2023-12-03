@@ -5,6 +5,7 @@ const city = document.querySelector(".city");
 const temp = document.querySelector(".temp");
 const humidity = document.querySelector(".humidity");
 const wind = document.querySelector(".wind");
+const weathertype = document.querySelector(".type");
 
 let search = document.getElementById("search-button");
 
@@ -18,6 +19,8 @@ async function checkWeather(cityName) {
     alert("Enter a valid city.");
   } else {
     console.log(data);
+    let type = data.weather[0].main;
+    weathertype.innerHTML = `<img src="images/${type}.png" class="weather-icon" />`;
     city.innerHTML = data.name;
     temp.innerHTML = Math.round(data.main.temp) + "°C";
     humidity.innerHTML = data.main.humidity + "%";
